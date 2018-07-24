@@ -4,7 +4,10 @@ Can show text and also scrolling text.
 ```c++
 #include "sevensegtm1637.h"
 
-SevenSegmentTM1637 ledDisplay(22, 23);
+const int clockPin = 22;
+const int dataPin = 23;
+
+SevenSegmentTM1637 ledDisplay(clockPin, dataPin);
 
 void setup() {
   ledDisplay.init();
