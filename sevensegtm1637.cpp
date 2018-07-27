@@ -21,6 +21,7 @@ void SevenSegmentTM1637::initChars() {
   chars['7'] = digits[7];
   chars['8'] = digits[8];
   chars['9'] = digits[9];
+  chars['.'] = SEG_DECIMAL_PT;
   chars['6'] = ALL_SEGMENTS & ~SEG_TOP_RIGHT;
   chars['a'] = ALL_SEGMENTS & ~SEG_BTM;
   chars['b'] = SEG_BTM_LEFT | SEG_BTM | SEG_BTM_RIGHT | SEG_MID | SEG_TOP_LEFT;
@@ -84,9 +85,32 @@ void SevenSegmentTM1637::scrollText(String message) {
   updateScroll();
 }
 
+String SevenSegmentTM1637::padRightAlign(String msg) {
+  byte len = msg.length();
+  if (msg.indexOf(".") != -1) 
+    len--;
+  else
+    return msg;
+  byte toPad = 4-len;
+  for (byte i=0; i<toPad; i++)
+    msg = " " + msg;
+  return msg;
+}
+
 void SevenSegmentTM1637::showText(String msg) {
-  showSegments(chars[tolower(msg[0])], chars[tolower(msg[1])],
-        chars[tolower(msg[2])], chars[tolower(msg[3])]);
+  msg = padRightAlign(msg);
+  byte segments[4] = {0,0,0,0}, seg = 0;
+  for (int ch=0; ch < msg.length() && seg<=4; ch++) {
+    if (msg[ch] == '.' && seg>0)
+      segments[seg-1] = segments[seg-1] | SEG_DECIMAL_PT;
+    else {
+      segments[seg] = chars[tolower(msg[ch])];
+      seg++;
+    }
+  }  
+    
+  showSegments(segments[0], segments[1], segments[2], segments[3]);
+  //showSegments(SEG_DECIMAL_PT, SEG_DECIMAL_PT, SEG_DECIMAL_PT, SEG_DECIMAL_PT);
 }
 
 void SevenSegmentTM1637::showSegments(uint8_t first, uint8_t second, uint8_t third, uint8_t fourth)

@@ -22,16 +22,18 @@ class SevenSegmentTM1637 {
     void start(void);
     void stop(void);
     bool writeValue(uint8_t value);
+    String padRightAlign(String);
 
   public:
-    uint8_t SEG_TOP_LEFT = B00100000;
-    uint8_t SEG_BTM_LEFT = B00010000;
-    uint8_t SEG_TOP =      B00000001;
-    uint8_t SEG_MID =      B01000000;
-    uint8_t SEG_BTM =      B00001000;
-    uint8_t SEG_TOP_RIGHT =B00000010;
-    uint8_t SEG_BTM_RIGHT =B00000100;
-    uint8_t ALL_SEGMENTS = B01111111;
+    uint8_t SEG_TOP_LEFT =  B00100000;
+    uint8_t SEG_BTM_LEFT =  B00010000;
+    uint8_t SEG_TOP =       B00000001;
+    uint8_t SEG_MID =       B01000000;
+    uint8_t SEG_BTM =       B00001000;
+    uint8_t SEG_TOP_RIGHT = B00000010;
+    uint8_t SEG_BTM_RIGHT = B00000100;
+    uint8_t ALL_SEGMENTS =  B01111111;
+    uint8_t SEG_DECIMAL_PT =B10000000; 
 
     SevenSegmentTM1637(int, int);
     void init(); // call in setup();
