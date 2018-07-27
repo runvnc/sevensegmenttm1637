@@ -3,7 +3,7 @@ Can show text and also scrolling text.
 
 If it is string representing a floating point number then it will show the decimal
 point correctly and right align. (You can use snprintf to format with a certain
-number of decimal places before calling showText.
+number of decimal places before calling showText.)
 
 ```c++
 #include "sevensegtm1637.h"
